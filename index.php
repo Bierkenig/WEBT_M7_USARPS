@@ -2,6 +2,8 @@
 
 namespace Htlw3r\M7usarps;
 
+use Doctrine\DBAL\DriverManager;
+
 require_once 'vendor/autoload.php';
 ?>
 
@@ -27,35 +29,39 @@ $connectionParams = [
     'host' => 'localhost',
     'driver' => 'pdo_mysql',
 ];
-$conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams);
-$queryBuilder = $conn->createQueryBuilder();
+$conn = DriverManager::getConnection($connectionParams);
 
-$result = $queryBuilder
+$result = $conn
+    ->createQueryBuilder()
     ->select('*')
     ->from('gameround')
     ->executeQuery()
     ->fetchAllAssociative();
 
-$body = '
-<body>
-    <h1 class="text-center mt-3">USARPS Championship 2020</h1>';
+$body = '<body><h1 class="text-center mt-3">USARPS Championship 2020</h1>';
 
-
-//FEHLER
 foreach ($result as $round){
-    $player1 = $queryBuilder
+    $player1 = $conn
+        ->createQueryBuilder()
         ->select('firstname','lastname')
         ->from('player')
-        ->where('pk_player_id = '.$round['fk_pk_player_1_id'])
+        ->where('pk_player_id = ' . $round['fk_pk_player_1_id'])
         ->executeQuery()
         ->fetchAllAssociative();
-    echo $round['fk_pk_player_1_id'];
-    var_dump($player1);
-    $body .= '<div>'.implode($round).'</div>';
+    $player2 = $conn
+        ->createQueryBuilder()
+        ->select('firstname','lastname')
+        ->from('player')
+        ->where('pk_player_id = ' . $round['fk_pk_player_2_id'])
+        ->executeQuery()
+        ->fetchAllAssociative();
+
+    $body .= '<div><h4>Game ' . $round['pk_gameround_id'] . ' (' . $round['date_time'] . ')</h4>';
+    $body .= $player1[0]['firstname'] . ' ' . $player1[0]['lastname'] . ': ' . $round['fk_pk_player_1_pick_id'] . '<br>';
+    $body .= $player2[0]['firstname'] . ' ' . $player2[0]['lastname'] . ': ' . $round['fk_pk_player_2_pick_id'] . '</div><br><br>';
+
 }
 
-$body .= '    
-</body>
-</html>';
+$body .= '</body></html>';
 
 echo $body;
