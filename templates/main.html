@@ -12,30 +12,13 @@
 </head>
 <body>
     <h1 class="text-center mt-3">USARPS Championship 2020</h1>
+    {% for game in allGames %}
     <div>
-        <h4>Game 1 (25.02.2020, 09:23 Uhr):</h4>
-        Harald: rock<br>
-        Franz: paper
+        <h4>Game {{ game.gameround }} ({{ game.datetime }}):</h4>
+        {{ game.player1_firstname }} {{ game.player1_lastname }}: {{ game.player1_pick }}<br>
+        {{ game.player2_firstname }} {{ game.player2_lastname }}: {{ game.player2_pick }}
     </div>
-    <div>
-        <h4>Game 2 (25.02.2020, 09:23 Uhr):</h4>
-        Harald: rock<br>
-        Franz: paper
-    </div>
-    <div>
-        <h4>Game 3 (25.02.2020, 09:23 Uhr):</h4>
-        Harald: rock<br>
-        Franz: paper
-    </div>
-    <div>
-        <h4>Game 4 (25.02.2020, 09:23 Uhr):</h4>
-        Harald: rock<br>
-        Franz: paper
-    </div>
-    <div>
-        <h4>Game 5 (25.02.2020, 09:23 Uhr):</h4>
-        Harald: rock<br>
-        Franz: paper
-    </div>
+    <br>
+    {% endfor %}
 </body>
 </html>

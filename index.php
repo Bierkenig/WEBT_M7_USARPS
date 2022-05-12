@@ -5,22 +5,6 @@ namespace Htlw3r\M7usarps;
 use Doctrine\DBAL\DriverManager;
 
 require_once 'vendor/autoload.php';
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M7 - USARPS Championship 2020</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
-</head>
-
-<?php
 
 $connectionParams = [
     'dbname' => 'usarps',
@@ -38,7 +22,12 @@ $result = $conn
     ->executeQuery()
     ->fetchAllAssociative();
 
-$body = '<body><h1 class="text-center mt-3">USARPS Championship 2020</h1>';
+$loader = new \Twig\Loader\FilesystemLoader('templates');
+$twig = new \Twig\Environment($loader);
+
+$template = $twig->load('main.html');
+
+$rounds = null;
 
 foreach ($result as $round){
     $player1 = $conn
@@ -56,12 +45,12 @@ foreach ($result as $round){
         ->executeQuery()
         ->fetchAllAssociative();
 
-    $body .= '<div><h4>Game ' . $round['pk_gameround_id'] . ' (' . $round['date_time'] . ')</h4>';
-    $body .= $player1[0]['firstname'] . ' ' . $player1[0]['lastname'] . ': ' . $round['fk_pk_player_1_pick_id'] . '<br>';
-    $body .= $player2[0]['firstname'] . ' ' . $player2[0]['lastname'] . ': ' . $round['fk_pk_player_2_pick_id'] . '</div><br><br>';
-
+    $rounds[] = array('gameround' => $round['pk_gameround_id'], 'datetime' => $round['date_time'],
+        'player1_firstname' => $player1[0]['firstname'], 'player1_lastname' => $player1[0]['lastname'],
+        'player1_pick' => $round['fk_pk_player_1_pick_id'] , 'player2_firstname' => $player2[0]['firstname'],
+        'player2_lastname' => $player2[0]['lastname'], 'player2_pick' => $round['fk_pk_player_2_pick_id']);
 }
 
-$body .= '</body></html>';
-
-echo $body;
+echo $template->render([
+    'allGames' => $rounds
+]);
