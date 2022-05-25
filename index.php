@@ -51,6 +51,34 @@ foreach ($result as $round){
         'player2_lastname' => $player2[0]['lastname'], 'player2_pick' => $round['fk_pk_player_2_pick_id']);
 }
 
+$allPlayersDB = $conn
+    ->createQueryBuilder()
+    ->select('*')
+    ->from('player')
+    ->executeQuery()
+    ->fetchAllAssociative();
+
+$allPlayers = null;
+
+foreach ($allPlayersDB as $player) {
+    $allPlayers[] = array('player_id' => $player['pk_player_id'], 'name' => $player['firstname'] . ' ' . $player['lastname']);
+}
+
+$allPicksDB = $conn
+    ->createQueryBuilder()
+    ->select('*')
+    ->from('pick')
+    ->executeQuery()
+    ->fetchAllAssociative();
+
+$allPicks = null;
+
+foreach ($allPicksDB as $pick) {
+    $allPicks[] = array('pick' => $pick['pk_pick']);
+}
+
 echo $template->render([
-    'allGames' => $rounds
+    'allGames' => $rounds,
+    'allPlayers' => $allPlayers,
+    'allPicks' => $allPicks
 ]);
