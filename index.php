@@ -82,3 +82,35 @@ echo $template->render([
     'allPlayers' => $allPlayers,
     'allPicks' => $allPicks
 ]);
+
+if (isset($_GET['insertPlayerButton'])) {
+    $insertFirstname = $_GET['insertFirstname'];
+    $insertLastname = $_GET['insertLastname'];
+    if ($insertFirstname . $insertLastname != "") {
+        // HIER DBAL: SPIELER HINZUFÜGEN
+    }
+}
+
+if (isset($_GET['insertGameroundButton'])) {
+    $insertPlayer1 = $_GET['insertPlayer1'];
+    $insertPlayer1Pick = $_GET['insertPlayer1Pick'];
+    $insertPlayer2 = $_GET['insertPlayer2'];
+    $insertPlayer2Pick = $_GET['insertPlayer2Pick'];
+    if ($insertPlayer1 != "" && $insertPlayer1Pick != "" && $insertPlayer2 != "" && $insertPlayer2Pick != "") {
+        // HIER DBAL: SPIEL HINZUFÜGEN
+    }
+}
+
+if (isset($_GET['deletePlayerButton'])) {
+    $deletePlayerId = $_GET['deletePlayer'];
+    if ($deletePlayerId != "") {
+        // HIER DBAL: SPIELER LÖSCHEN
+    }
+}
+
+if (isset($_GET['deleteGameroundButton'])) {
+    $deleteGameroundId = $_GET['deleteGameround'];
+    if ($deleteGameroundId != "") {
+        // HIER DBAL: SPIEL LÖSCHEN
+    }
+}
