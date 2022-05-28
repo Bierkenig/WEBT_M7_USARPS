@@ -49,8 +49,9 @@
 
         .formField {
             margin: 10px 10px 0 0;
+            border-radius: 5px;
+            background-color: khaki;
         }
-
 
         .adminnavbar, .navbar {
             display: flex;
@@ -102,7 +103,7 @@
             for (i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].style.display = "none";
             }
-            tablinks = document.getElementsByClassName("tablinks");
+            tablinks = document.getElementsByClassName("navbarlinks");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].className = tablinks[i].className.replace(" active", "");
             }

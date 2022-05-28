@@ -113,6 +113,17 @@ ALTER TABLE `pick`
 --
 ALTER TABLE `player`
   ADD PRIMARY KEY (`pk_player_id`);
+
+--
+-- Constraints der exportierten Tabellen
+--
+
+--
+-- Constraints der Tabelle `gameround`
+--
+ALTER TABLE `gameround`
+    ADD CONSTRAINT `fk_pk_player_1` FOREIGN KEY (`fk_pk_player_1_id`) REFERENCES `player` (`pk_player_id`) ON DELETE CASCADE,
+    ADD CONSTRAINT `fk_pk_player_2` FOREIGN KEY (`fk_pk_player_2_id`) REFERENCES `player` (`pk_player_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
