@@ -17,6 +17,31 @@
             background-size: cover;
         }
 
+        #insertPlayer{
+            display:flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            row-gap:0
+        }
+
+        #insertGame{
+            display:flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            row-gap:0
+        }
+        #deletePlayer{
+            display:flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            row-gap:0
+        }
+        #deleteGame{
+            display:flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            row-gap:0
+        }
         #gamerounds, #adminContent {
             display: flex;
             flex-direction: row;
@@ -28,8 +53,11 @@
             backdrop-filter: blur(8px); /* Chrome and Opera */
             box-shadow: inset 0 0 0 500px rgba(255, 255, 255, 0.5);
             border-radius: 20px;
+            justify-content: center;
         }
-
+        #forms{
+            min-width: 315px;
+        }
         #gameround {
             padding: 50px 50px 30px 50px;
         }
@@ -47,9 +75,16 @@
         }
 
         .formField {
+            margin: 0 auto 0 auto;
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+        }
+        .formField1 {
             margin: 10px 10px 0 0;
-            border-radius: 5px;
-            background-color: khaki;
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none
         }
 
         .adminnavbar, .navbar {
@@ -93,6 +128,19 @@
             display: none;
             padding: 6px 12px;
             border-top: none;
+        }
+        #player{
+            text-align: center;
+        }
+
+        #game{
+            text-align: center;
+        }
+        #deletedPlayer{
+            text-align: center;
+        }
+        #deletedGame{
+            text-align: center;
         }
     </style>
     <script defer>
@@ -158,7 +206,7 @@
                 <div id="Insert" class="admincontent">
                     <form method="get" id="insertForm">
                         <fieldset id="insertPlayer">
-                            <legend>Spieler</legend>
+                            <legend id="player">Spieler</legend>
                             <input class="formField" type="text" name="insertFirstname" id="insertFirstname" placeholder="Vorname" />
                             <br>
                             <input class="formField" type="text" name="insertLastname" id="insertLastname" placeholder="Nachname" />
@@ -166,27 +214,27 @@
                             <button class="formField" type="submit" name="insertPlayerButton">Spieler speichern</button>
                         </fieldset>
                         <fieldset id="insertGame">
-                            <legend>Spiel</legend>
-                            <select class="formField" name="insertPlayer1">
+                            <legend id="game">Spiel</legend>
+                            <select class="formField1" name="insertPlayer1">
                                 <option value="" disabled selected>Spieler 1</option>
                                 {% for player in allPlayers %}
                                 <option value="{{ player.player_id }}">{{ player.name }}</option>
                                 {% endfor %}
                             </select>
-                            <select class="formField" name="insertPlayer1Pick">
+                            <select class="formField1" name="insertPlayer1Pick">
                                 <option value="" disabled selected>Spieler 1 Auswahl</option>
                                 {% for pick in allPicks %}
                                 <option value="{{ pick.pick }}">{{ pick.pick }}</option>
                                 {% endfor %}
                             </select>
                             <br>
-                            <select class="formField" name="insertPlayer2">
+                            <select class="formField1" name="insertPlayer2">
                                 <option value="" disabled selected>Spieler 2</option>
                                 {% for player in allPlayers %}
                                 <option value="{{ player.player_id }}">{{ player.name }}</option>
                                 {% endfor %}
                             </select>
-                            <select class="formField" name="insertPlayer2Pick">
+                            <select class="formField1" name="insertPlayer2Pick">
                                 <option value="" disabled selected>Spieler 2 Auswahl</option>
                                 {% for pick in allPicks %}
                                 <option value="{{ pick.pick }}">{{ pick.pick }}</option>
@@ -200,7 +248,7 @@
                 <div id="Delete" class="admincontent">
                     <form method="get" id="deleteForm">
                         <fieldset id="deletePlayer">
-                            <legend>Spieler</legend>
+                            <legend id="deletedPlayer">Spieler</legend>
                             <select class="formField" name="deletePlayer">
                                 <option value="" disabled selected>Spieler wählen</option>
                                 {% for player in allPlayers %}
@@ -211,7 +259,7 @@
                             <button class="formField" type="submit" name="deletePlayerButton">Spieler löschen</button>
                         </fieldset>
                         <fieldset id="deleteGame">
-                            <legend>Spiel</legend>
+                            <legend id="deletedGame">Spiel</legend>
                             <select class="formField" name="deleteGameround">
                                 <option value="" disabled selected>Spiel wählen</option>
                                 {% for game in allGames %}
