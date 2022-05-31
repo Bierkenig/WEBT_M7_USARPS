@@ -21,6 +21,10 @@ SET time_zone = "+00:00";
 -- Datenbank: `usarps`
 --
 
+DROP DATABASE IF EXISTS usarps;
+CREATE DATABASE IF NOT EXISTS usarps;
+USE usarps;
+
 -- --------------------------------------------------------
 
 --
